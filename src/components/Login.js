@@ -6,8 +6,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { BG_URL } from "../utils/constants";
-import { useNavigate } from "react-router-dom";
+import { BG_URL, USER_AVTAR } from "../utils/constants";
 import { updateProfile } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
@@ -15,7 +14,7 @@ import { addUser } from "../utils/userSlice";
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
-  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const name = useRef(null);
@@ -42,8 +41,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL:
-              "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Salman_Khan.jpg/220px-Salman_Khan.jpg",
+            photoURL: USER_AVTAR,
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
@@ -55,14 +53,12 @@ const Login = () => {
                   photoURL: photoURL,
                 })
               );
-              navigate("/browse");
             })
             .catch((error) => {
               // An error occurred
               // ...
+              setErrorMessage(error.message);
             });
-
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -79,7 +75,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in Logic
           const user = userCredential.user;
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -108,7 +103,7 @@ const Login = () => {
     <div>
       <Header />
       <div className="absolute">
-        <img className="" src={BG_URL} alt="logo" />
+        <img className="" src={BG_URL} alt="bg-img" />
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
