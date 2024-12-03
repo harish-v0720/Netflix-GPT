@@ -35,6 +35,9 @@
 - TMDB Image CD URl
 - Made the Browse Page Good with Tailwind CSS
 - usePopularMovies Custom Hooks.
+- GPT search page
+- GPT search bar
+- Multi Language feature in our app \*\*\*\*
 
 # Features
 
